@@ -1,12 +1,9 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
-import Player from "./players/player";
+import { useDispatch } from "react-redux";
+import PlayerContainer from "./players/player_container";
 import { drawCard } from "../actions/cards_actions";
 
 const App = (props) => {
-  const player1 = useSelector((state) => state.players.p1);
-  const player2 = useSelector((state) => state.players.p2);
-  console.log(player1);
   const dispatch = useDispatch();
 
   const draw = () => {
@@ -22,8 +19,8 @@ const App = (props) => {
 
   return (
     <div style={{ display: "flex", justifyContent: "space-between" }}>
-      <Player playerObj={player1} />
-      <Player playerObj={player2} />
+      <PlayerContainer playerId="p1" />
+      <PlayerContainer playerId="p2" />
       <button onClick={draw}>Play</button>
     </div>
   );

@@ -1,12 +1,20 @@
 import React from "react";
+import { useEffect } from "react";
 import Deck from "../decks/deck";
 
-const Player = (props) => {
-  return (
-    <div>
-      <Deck {...props.playerObj} />
-    </div>
-  );
-};
+class Player extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+
+    return (
+      <div>
+        <Deck {...this.props} />
+      </div>
+    );
+  }
+}
 
 export default Player;
