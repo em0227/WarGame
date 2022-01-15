@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 export const CardFaceDown = (props) => {
   const cardFaceDown = props.card;
 
-  if (cardFaceDown === 0) {
+  if (cardFaceDown.length === 0) {
     return null;
   } else {
     return (

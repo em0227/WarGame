@@ -5,14 +5,20 @@ import { CardFaceDown } from "../cards/cardFaceDown";
 class Deck extends React.Component {
   constructor(props) {
     super(props);
-    this.deck = props.deck;
-    this.cardFaceUp = "";
-    this.cardFaceDown = 0;
+    this.deck = props.playerObj.deck;
   }
+
+  // componentDidUpdate(prevProps) {
+  //   if (prevProps.deck !== this.props.deck) {
+  //     this.cardFaceUp = this.props.playerObj.deck[0];
+  //     this.cardFaceDown = this.props.playerObj.cardFaceDown.length;
+  //   }
+  // }
 
   draw() {
     //poping out from the deck
-    //updating local state of cardFaceUp
+    //update global state of cardFaceUp
+    const card = this.deck.pop();
   }
 
   isEmpty() {}
@@ -30,10 +36,10 @@ class Deck extends React.Component {
           }}
         ></div>
         <div className="player-card-face-up">
-          <CardFaceUp card={this.cardFaceUp} />
+          <CardFaceUp card={this.props.playerObj.deck[0]} />
         </div>
         <div className="player-card-face-down">
-          <CardFaceDown card={this.cardFaceDown} />
+          <CardFaceDown card={this.props.playerObj.cardFaceDown} />
         </div>
       </div>
     );

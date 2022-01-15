@@ -1,15 +1,27 @@
 import React from "react";
-import Deck from "./decks/deck";
+import { useSelector, useDispatch } from "react-redux";
+import Player from "./players/player";
 import { startGame } from "../reducers/selector";
 
 const App = (props) => {
-  const decks = startGame();
-  const deckOne = decks[0];
-  const deckTwo = decks[1];
+  const dispatch = useDispatch();
+
+  const start = () => {
+    const cards = startGame();
+    const deckOne = cards[0];
+    const deckTwo = cards[1];
+    dispatch({ type: "START_GAME_P1", deck: deckOne });
+    dispatch({ type: "START_GAME_P2", deck: deckTwo });
+  };
+
+  const player1 = useSelector((state) => state.player1);
+  const player2 = useSelector((state) => state.player2);
+
   return (
     <div style={{ display: "flex", justifyContent: "space-between" }}>
-      <Deck deck={deckOne} />
-      <Deck deck={deckTwo} />
+      <Player playerObj={player1} />
+      <Player playerObj={player2} />
+      <button onClick={start}>Play</button>
     </div>
   );
 };

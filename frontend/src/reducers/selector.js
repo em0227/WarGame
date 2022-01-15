@@ -13,18 +13,15 @@ export const startGame = function () {
 
   while (cardCount.size < 52) {
     let index = getRandomInt();
-    // console.log(index);
     if (cardCount.has(index)) continue;
     cardCount.add(index);
-    console.log(cardCount);
-    if (results[0].length <= 26) {
+    if (results[0].length <= 25) {
       results[0].push(cards[index]);
-      //   console.log(results);
     } else {
       results[1].push(cards[index]);
     }
   }
-
+  console.log(results[0].length, results[1].length);
   return results;
 };
 
