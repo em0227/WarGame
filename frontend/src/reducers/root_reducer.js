@@ -1,10 +1,11 @@
 import { combineReducers } from "redux";
-import player1Reducer from "./player1_reducer";
-import player2Reducer from "./player2_reducer";
+import players from "./players_reducer";
+import game from "./game_reducer";
+// import player2Reducer from "./player2_reducer";
 // import warReducer from "./war_reducer";
 
 export default combineReducers({
-  player1: player1Reducer,
-  player2: player2Reducer,
+  players,
   // war: warReducer,
+  game,
 });

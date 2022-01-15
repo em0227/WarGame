@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 
-export const CardFaceUp = (props) => {
+const CardFaceUp = (props) => {
   const cardFaceUp = props.card;
 
   if (cardFaceUp === "") {
@@ -20,3 +20,5 @@ export const CardFaceUp = (props) => {
     );
   }
 };
+
+export default CardFaceUp;

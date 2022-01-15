@@ -4,7 +4,7 @@ import Deck from "../decks/deck";
 const Player = (props) => {
   return (
     <div>
-      <Deck playerObj={props.playerObj} cardFaceUp />
+      <Deck {...props.playerObj} />
     </div>
   );
 };
