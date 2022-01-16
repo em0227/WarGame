@@ -8,6 +8,7 @@ class Game extends React.Component {
     this.timerId = 0;
     this.state = {
       winner: "",
+      status: "",
     };
   }
 
@@ -32,13 +33,16 @@ class Game extends React.Component {
           this.setState({ winner: "WINNER: P1" });
           cards = [cardUpP2, cardUpP1];
         }
-        clearCard();
+
         addCardToDiscard(cards, result);
+        clearCard();
 
         if (deckP1.length === 0) {
+          this.setState({ status: "Move Pile to Deck" });
           movePileToDeck("p1");
         }
         if (deckP2.length === 0) {
+          this.setState({ status: "Move Pile to Deck" });
           movePileToDeck("p2");
         }
       }, 500);
@@ -52,25 +56,30 @@ class Game extends React.Component {
 
     this.timerId = setInterval(() => {
       if (deckP1.length > 0 && deckP2.length > 0) {
-        this.setState({ winner: "" });
+        this.setState({ winner: "", status: "" });
         drawCard();
-      } else {
-        clearInterval(this.timerId);
       }
-    }, 1500);
+    }, 1000);
 
     // drawCard();
   }
 
   render() {
-    if (this.props.deckP1.length === 0) {
-      return <div>"Game Over!"</div>;
+    const { deckP1, deckP2, cardUpP1, cardUpP2, discardP1, discardP2 } =
+      this.props;
+    if (
+      (deckP1.length === 0 && cardUpP1 === "" && discardP1.length === 0) ||
+      (deckP2.length === 0 && cardUpP2 === "" && discardP2.length === 0)
+    ) {
+      clearInterval(this.timerId); //won't be able to show the last round winner as it will render this
+      return <div style={{ color: "red" }}>Game Over!</div>;
     } else {
       return (
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <PlayerContainer playerId="p1" />
           <PlayerContainer playerId="p2" />
           <div style={{ color: "red" }}>{this.state.winner}</div>
+          <div style={{ color: "red" }}>{this.state.status}</div>
           <button onClick={this.draw.bind(this)}>Play</button>
         </div>
       );

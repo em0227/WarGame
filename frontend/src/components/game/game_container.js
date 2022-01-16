@@ -11,6 +11,8 @@ const mapStateToProps = (state) => ({
   cardUpP2: state.players.p2.cardFaceUp,
   deckP1: state.players.p1.deck,
   deckP2: state.players.p2.deck,
+  discardP1: state.players.p1.discardPile,
+  discardP2: state.players.p2.discardPile,
 });
 
 const mapDispatchToProps = (dispatch) => ({

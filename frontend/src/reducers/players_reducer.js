@@ -12,10 +12,10 @@ import {
 import { startGame } from "../reducers/selector";
 
 const cards = startGame();
-// const deckOne = cards[0];
-// const deckTwo = cards[1];
-const deckOne = ["14 heart", "13 club", "14 spade"];
-const deckTwo = ["10 spade", "9 spade", "5 heart"];
+const deckOne = cards[0];
+const deckTwo = cards[1];
+// const deckOne = ["9 heart", "13 club", "14 spade"];
+// const deckTwo = ["10 spade", "11 spade", "12 heart"];
 
 const _default_state = {
   p1: {
