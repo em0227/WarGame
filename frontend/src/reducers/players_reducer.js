@@ -5,7 +5,10 @@ import {
   WAR_DRAW,
 } from "../actions/cards_actions";
 
-import { ADD_CARDS_TO_DISCARD } from "../actions/discard_pile_actions";
+import {
+  ADD_CARDS_TO_DISCARD,
+  MOVE_PILE_TO_DECK,
+} from "../actions/discard_pile_actions";
 import { startGame } from "../reducers/selector";
 
 const cards = startGame();
@@ -50,6 +53,11 @@ export default (state = _default_state, action) => {
       newState[action.playerId].discardPile = originalCards.concat(
         action.cards
       );
+      return newState;
+    case MOVE_PILE_TO_DECK:
+      const pile = newState[action.playerId].discardPile;
+      newState[action.playerId].deck = pile;
+      newState[action.playerId].discardPile = [];
       return newState;
     default:
       return state;

@@ -12,7 +12,15 @@ class Game extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { cardUpP1, cardUpP2, addCardToDiscard, clearCard } = this.props;
+    const {
+      cardUpP1,
+      cardUpP2,
+      addCardToDiscard,
+      clearCard,
+      deckP1,
+      deckP2,
+      movePileToDeck,
+    } = this.props;
     if (prevProps !== this.props && cardUpP1 !== "") {
       setTimeout(() => {
         const result = GameLogic.whoWins(cardUpP1, cardUpP2);
@@ -26,29 +34,34 @@ class Game extends React.Component {
         }
         clearCard();
         addCardToDiscard(cards, result);
-      }, 1000);
+        if (deckP1.length === 0) {
+          movePileToDeck("p1");
+        } else if (deckP2.length === 0) {
+          movePileToDeck("p2");
+        }
+      }, 500);
     }
   }
 
   draw() {
-    const { drawCard, deck } = this.props;
+    const { drawCard, deckP1 } = this.props;
     //poping out from the deck
     //update global state of deck, cardFaceUp
 
     this.timerId = setInterval(() => {
-      if (deck.length > 0) {
+      if (deckP1.length > 0) {
         this.setState({ winner: "" });
         drawCard();
       } else {
         clearInterval(this.timerId);
       }
-    }, 2000);
+    }, 1500);
 
     // drawCard();
   }
 
   render() {
-    if (this.props.deck.length === 0) {
+    if (this.props.deckP1.length === 0) {
       return <div>"Game Over!"</div>;
     } else {
       return (
