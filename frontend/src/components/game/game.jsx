@@ -1,6 +1,7 @@
 import React from "react";
 import * as GameLogic from "./game_logic";
 import PlayerContainer from "../players/player_container";
+import { winner } from "../../actions/winner_action";
 
 class Game extends React.Component {
   constructor(props) {
@@ -26,7 +27,12 @@ class Game extends React.Component {
       setTimeout(() => {
         const result = GameLogic.whoWins(cardUpP1, cardUpP2);
         let cards;
-        if (result === "p2") {
+        if (result === "war") {
+          //dispatch state war to true
+          //clear timerid
+          //save the cardUp to cardDown and invoke warDraw
+          //may need to add differnt condiiton in the compDidUpdate to address moving cardUp & cardDown to discardPile
+        } else if (result === "p2") {
           this.setState({ winner: "WINNER: P2" });
           cards = [cardUpP1, cardUpP2];
         } else {
@@ -64,14 +70,25 @@ class Game extends React.Component {
     // drawCard();
   }
 
+  warDraw() {
+    //if global state war is true, clearInveral this.timerId
+    //set new interval on war draw until war ends and call draw again
+  }
+
   render() {
-    const { deckP1, deckP2, cardUpP1, cardUpP2, discardP1, discardP2 } =
+    const { deckP1, deckP2, cardUpP1, cardUpP2, discardP1, discardP2, winner } =
       this.props;
-    if (
-      (deckP1.length === 0 && cardUpP1 === "" && discardP1.length === 0) ||
-      (deckP2.length === 0 && cardUpP2 === "" && discardP2.length === 0)
-    ) {
+    const p1 = deckP1.length === 0 && cardUpP1 === "" && discardP1.length === 0;
+    const p2 = deckP2.length === 0 && cardUpP2 === "" && discardP2.length === 0;
+    if (p1 || p2) {
       clearInterval(this.timerId); //won't be able to show the last round winner as it will render this
+      if (p1) {
+        //final winner is p2
+        winner("P1");
+      } else {
+        //final winner is p1
+        winner("P2");
+      }
       return <div style={{ color: "red" }}>Game Over!</div>;
     } else {
       return (

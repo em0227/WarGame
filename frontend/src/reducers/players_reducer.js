@@ -38,6 +38,7 @@ export default (state = _default_state, action) => {
   Object.freeze(state);
   // console.log(state);
   let newState = JSON.parse(JSON.stringify(state));
+  //used Object.assign but didn't work
   switch (action.type) {
     case DRAW_CARD:
       const length1 = newState.p1.deck.length;

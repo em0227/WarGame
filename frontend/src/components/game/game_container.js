@@ -5,6 +5,7 @@ import {
   movePileToDeck,
 } from "../../actions/discard_pile_actions";
 import { drawCard, clearCard } from "../../actions/cards_actions";
+import { winner } from "../../actions/winner_action";
 
 const mapStateToProps = (state) => ({
   cardUpP1: state.players.p1.cardFaceUp,
@@ -21,6 +22,7 @@ const mapDispatchToProps = (dispatch) => ({
   drawCard: () => dispatch(drawCard()),
   clearCard: () => dispatch(clearCard()),
   movePileToDeck: (playerId) => dispatch(movePileToDeck(playerId)),
+  winner: (player) => dispatch(winner(player)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);
