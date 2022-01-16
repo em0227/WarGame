@@ -21,7 +21,7 @@ export const startGame = function () {
       results[1].push(cards[index]);
     }
   }
-  console.log(results[0].length, results[1].length);
+
   return results;
 };
 

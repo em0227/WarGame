@@ -1,20 +1,14 @@
 import React from "react";
-import { useEffect } from "react";
 import Deck from "../decks/deck";
+import DiscardPile from "../discard_piles/discard_piles";
 
-class Player extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-
-    return (
-      <div>
-        <Deck {...this.props} />
-      </div>
-    );
-  }
-}
+const Player = (props) => {
+  return (
+    <div>
+      <Deck {...props} />
+      <DiscardPile playerId={props.id} />
+    </div>
+  );
+};
 
 export default Player;

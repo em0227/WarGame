@@ -3,6 +3,8 @@ import {
   DRAW_CARD,
   WAR_DRAW,
 } from "../actions/cards_actions";
+
+import { ADD_CARDS_TO_DISCARD } from "../actions/discard_pile_actions";
 import { startGame } from "../reducers/selector";
 
 const cards = startGame();
@@ -15,14 +17,14 @@ const _default_state = {
     cardFaceDown: [],
     discardPile: [],
     deck: deckOne,
-    id: 1,
+    id: "p1",
   },
   p2: {
     cardFaceUp: "",
     cardFaceDown: [],
     discardPile: [],
     deck: deckTwo,
-    id: 2,
+    id: "p2",
   },
 };
 
@@ -37,9 +39,12 @@ export default (state = _default_state, action) => {
       newState.p2.cardFaceUp = p2_card;
       return newState;
     case ADD_CARDS_TO_FACEDOWN: //may not work, and haven't update player 2
-      if (action.id === 1) {
-      }
-      newState.cardFaceDown.concat(action.cards);
+      return newState;
+    case ADD_CARDS_TO_DISCARD:
+      const originalCards = newState[action.playerId].discardPile;
+      newState[action.playerId].discardPile = originalCards.concat(
+        action.cards
+      );
       return newState;
     default:
       return state;
