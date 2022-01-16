@@ -12,8 +12,10 @@ import {
 import { startGame } from "../reducers/selector";
 
 const cards = startGame();
-const deckOne = cards[0];
-const deckTwo = cards[1];
+// const deckOne = cards[0];
+// const deckTwo = cards[1];
+const deckOne = ["14 heart", "13 club", "14 spade"];
+const deckTwo = ["10 spade", "9 spade", "5 heart"];
 
 const _default_state = {
   p1: {
@@ -34,13 +36,19 @@ const _default_state = {
 
 export default (state = _default_state, action) => {
   Object.freeze(state);
-  let newState = Object.assign({}, state);
+  // console.log(state);
+  let newState = JSON.parse(JSON.stringify(state));
   switch (action.type) {
     case DRAW_CARD:
-      const p1_card = newState.p1.deck.pop();
-      const p2_card = newState.p2.deck.pop();
+      const length1 = newState.p1.deck.length;
+      const length2 = newState.p2.deck.length;
+      const p1_card = newState.p1.deck.at(-1);
+      const p2_card = newState.p2.deck.at(-1);
       newState.p1.cardFaceUp = p1_card;
       newState.p2.cardFaceUp = p2_card;
+      newState.p1.deck = newState.p1.deck.slice(0, length1 - 1);
+      newState.p2.deck = newState.p2.deck.slice(0, length2 - 1);
+      // debugger;
       return newState;
     case ADD_CARDS_TO_FACEDOWN: //may not work, and haven't update player 2
       return newState;
