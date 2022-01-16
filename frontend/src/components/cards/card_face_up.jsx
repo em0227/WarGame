@@ -1,5 +1,4 @@
 import React from "react";
-import { useDispatch } from "react-redux";
 
 const CardFaceUp = (props) => {
   const cardFaceUp = props.card;

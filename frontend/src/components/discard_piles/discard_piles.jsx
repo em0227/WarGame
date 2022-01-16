@@ -14,7 +14,8 @@ const DiscardPile = (props) => {
         height: "100px",
       }}
     >
-      {`Discard: ${discardPile[discardPile.length - 1]}`}
+      <p>Won Cards</p>
+      <p>{`Last won with: ${discardPile[discardPile.length - 1]}`}</p>
     </div>
   );
 };

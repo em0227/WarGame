@@ -23,7 +23,6 @@ class Game extends React.Component {
       movePileToDeck,
     } = this.props;
     if (
-      // !warStatus &&
       cardUpP1 !== "" &&
       cardUpP2 !== "" &&
       prevProps.cardUpP1 !== this.props.cardUpP1
@@ -32,16 +31,14 @@ class Game extends React.Component {
         const result = GameLogic.whoWins(cardUpP1, cardUpP2);
         let cards;
         if (result === "war") {
-          //dispatch state war to true
           //clear timerid
-          //save the cardUp to cardDown and invoke warDraw
+          //save the cardUp to cardDown = invoke warDraw
           //may need to add differnt condiiton in the compDidUpdate to address moving cardUp & cardDown to discardPile
           clearInterval(this.timerId);
           this.setState({ status: "WAR!!!" });
           this.warDraw();
           return;
         } else if (result === "p2") {
-          // war(false);
           if (this.state.status === "WAR!!!") {
             clearInterval(this.timerId);
             this.setState({ status: "" });
@@ -50,7 +47,6 @@ class Game extends React.Component {
           this.setState({ winner: "WINNER: P2" });
           cards = [cardUpP1, cardUpP2];
         } else {
-          // war(false);
           if (this.state.status === "WAR!!!") {
             clearInterval(this.timerId);
             this.setState({ status: "" });
@@ -79,7 +75,6 @@ class Game extends React.Component {
     const { drawCard, deckP1, deckP2 } = this.props;
     //poping out from the deck
     //update global state of deck, cardFaceUp
-    // clearInterval(this.timerId);
     this.timerId = setInterval(() => {
       if (deckP1.length > 0 && deckP2.length > 0) {
         this.setState({ winner: "", status: "" });
@@ -91,7 +86,6 @@ class Game extends React.Component {
   }
 
   warDraw() {
-    //if global state war is true, clearInveral this.timerId
     //set new interval on war draw until war ends and call draw again
     const {
       winner,

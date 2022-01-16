@@ -1,5 +1,3 @@
-import { warDraw } from "../../actions/cards_actions";
-
 export const whoWins = (player1, player2) => {
   const num1 = parseInt(player1.split(" ")[0]);
   const num2 = parseInt(player2.split(" ")[0]);
@@ -13,5 +11,3 @@ export const whoWins = (player1, player2) => {
     return "p2";
   }
 };
-
-export const war = () => {};
