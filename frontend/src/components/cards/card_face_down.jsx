@@ -16,7 +16,7 @@ const CardFaceDown = (props) => {
           color: "white",
         }}
       >
-        {`${cardFaceDown} cards`}
+        {`${cardFaceDown.length} cards`}
       </div>
     );
   }

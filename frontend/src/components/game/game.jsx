@@ -42,10 +42,20 @@ class Game extends React.Component {
           return;
         } else if (result === "p2") {
           // war(false);
+          if (this.state.status === "WAR!!!") {
+            clearInterval(this.timerId);
+            this.setState({ status: "" });
+            this.draw();
+          }
           this.setState({ winner: "WINNER: P2" });
           cards = [cardUpP1, cardUpP2];
         } else {
           // war(false);
+          if (this.state.status === "WAR!!!") {
+            clearInterval(this.timerId);
+            this.setState({ status: "" });
+            this.draw();
+          }
           this.setState({ winner: "WINNER: P1" });
           cards = [cardUpP2, cardUpP1];
         }
@@ -61,7 +71,7 @@ class Game extends React.Component {
           this.setState({ status: "Move Pile to Deck" });
           movePileToDeck("p2");
         }
-      }, 500);
+      }, 1000);
     }
   }
 
@@ -69,13 +79,13 @@ class Game extends React.Component {
     const { drawCard, deckP1, deckP2 } = this.props;
     //poping out from the deck
     //update global state of deck, cardFaceUp
-    clearInterval(this.timerId);
+    // clearInterval(this.timerId);
     this.timerId = setInterval(() => {
       if (deckP1.length > 0 && deckP2.length > 0) {
         this.setState({ winner: "", status: "" });
         drawCard();
       }
-    }, 1000);
+    }, 2000);
 
     // drawCard();
   }
@@ -83,17 +93,31 @@ class Game extends React.Component {
   warDraw() {
     //if global state war is true, clearInveral this.timerId
     //set new interval on war draw until war ends and call draw again
-    const { winner, deckP1, deckP2, addCardsToFaceDown } = this.props;
+    const {
+      winner,
+      deckP1,
+      deckP2,
+      addCardsToFaceDown,
+      discardP1,
+      discardP2,
+      movePileToDeck,
+    } = this.props;
 
     this.timerId = setInterval(() => {
       if (deckP1.length >= 2 && deckP2.length >= 2) {
         addCardsToFaceDown();
-      } else if (deckP1.length < 2) {
+      } else if (deckP1.length < 2 && discardP1.length > 0) {
+        movePileToDeck("p1");
+        addCardsToFaceDown();
+      } else if (deckP2.length < 2 && discardP2.length > 0) {
+        movePileToDeck("p2");
+        addCardsToFaceDown();
+      } else if (deckP1.length < 2 && discardP1.length < 1) {
         winner("P2");
       } else {
         winner("P1");
       }
-    }, 1000);
+    }, 2000);
   }
 
   render() {

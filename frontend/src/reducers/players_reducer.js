@@ -12,10 +12,10 @@ import {
 import { startGame } from "../reducers/selector";
 
 const cards = startGame();
-// const deckOne = cards[0];
-// const deckTwo = cards[1];
-const deckOne = ["13 club", "14 spade", "9 heart"];
-const deckTwo = ["11 spade", "12 heart", "10 spade"];
+const deckOne = cards[0];
+const deckTwo = cards[1];
+// const deckOne = ["13 club", "14 spade", "9 heart"];
+// const deckTwo = ["11 spade", "12 heart", "10 spade"];
 // const deckOne = ["14 heart", "13 club", "14 spade", "9 heart"];
 // const deckTwo = ["10 spade", "11 spade", "12 heart", "9 diamond"];
 
@@ -76,6 +76,12 @@ export default (state = _default_state, action) => {
       return newState;
     case ADD_CARDS_TO_DISCARD:
       const originalCards = newState[action.playerId].discardPile;
+      if (newState.p1.cardFaceDown.length > 0) {
+        originalCards.push(...newState.p1.cardFaceDown);
+        originalCards.push(...newState.p2.cardFaceDown);
+      }
+      newState.p1.cardFaceDown = [];
+      newState.p2.cardFaceDown = [];
       newState[action.playerId].discardPile = originalCards.concat(
         action.cards
       );
