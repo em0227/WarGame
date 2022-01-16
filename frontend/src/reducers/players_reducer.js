@@ -1,6 +1,7 @@
 import {
   ADD_CARDS_TO_FACEDOWN,
   DRAW_CARD,
+  CLEAR_CARD,
   WAR_DRAW,
 } from "../actions/cards_actions";
 
@@ -39,6 +40,10 @@ export default (state = _default_state, action) => {
       newState.p2.cardFaceUp = p2_card;
       return newState;
     case ADD_CARDS_TO_FACEDOWN: //may not work, and haven't update player 2
+      return newState;
+    case CLEAR_CARD:
+      newState.p1.cardFaceUp = "";
+      newState.p2.cardFaceUp = "";
       return newState;
     case ADD_CARDS_TO_DISCARD:
       const originalCards = newState[action.playerId].discardPile;
