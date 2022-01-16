@@ -12,10 +12,12 @@ import {
 import { startGame } from "../reducers/selector";
 
 const cards = startGame();
-const deckOne = cards[0];
-const deckTwo = cards[1];
-// const deckOne = ["9 heart", "13 club", "14 spade"];
-// const deckTwo = ["10 spade", "11 spade", "12 heart"];
+// const deckOne = cards[0];
+// const deckTwo = cards[1];
+const deckOne = ["13 club", "14 spade", "9 heart"];
+const deckTwo = ["11 spade", "12 heart", "10 spade"];
+// const deckOne = ["14 heart", "13 club", "14 spade", "9 heart"];
+// const deckTwo = ["10 spade", "11 spade", "12 heart", "9 diamond"];
 
 const _default_state = {
   p1: {
@@ -52,6 +54,21 @@ export default (state = _default_state, action) => {
       // debugger;
       return newState;
     case ADD_CARDS_TO_FACEDOWN: //may not work, and haven't update player 2
+      //add current cardFaceUp to cardFaceDown
+      //draw 2 cards from deck, one add to cardFaceDown and one add to cardFaceUp
+      const currentUpP1 = newState.p1.cardFaceUp;
+      const currentUpP2 = newState.p2.cardFaceUp;
+      newState.p1.cardFaceDown.push(currentUpP1);
+      newState.p2.cardFaceDown.push(currentUpP2);
+      const newCardDownP1 = newState.p1.deck.pop();
+      const newCardDownP2 = newState.p2.deck.pop();
+      newState.p1.cardFaceDown.push(newCardDownP1);
+      newState.p2.cardFaceDown.push(newCardDownP2);
+      const newCardUpP1 = newState.p1.deck.pop();
+      const newCardUpP2 = newState.p2.deck.pop();
+      newState.p1.cardFaceUp = newCardUpP1;
+      newState.p2.cardFaceUp = newCardUpP2;
+
       return newState;
     case CLEAR_CARD:
       newState.p1.cardFaceUp = "";

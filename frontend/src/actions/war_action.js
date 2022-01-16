@@ -1,3 +1,4 @@
-export const war = () => ({
+export const war = (status) => ({
   type: "WAR",
+  status,
 });

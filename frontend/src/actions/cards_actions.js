@@ -3,10 +3,8 @@ export const DRAW_CARD = "DRAW_CARD";
 export const WAR_DRAW = "WAR_DRAW";
 export const CLEAR_CARD = "CLEAR_CARD";
 
-export const addCardsToFaceDown = (cards, id) => ({
+export const addCardsToFaceDown = () => ({
   type: ADD_CARDS_TO_FACEDOWN,
-  cards,
-  id,
 });
 
 export const drawCard = () => ({
