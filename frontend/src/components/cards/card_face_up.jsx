@@ -1,8 +1,6 @@
 import React from "react";
 
-const CardFaceUp = (props) => {
-  const cardFaceUp = props.card;
-
+const CardFaceUp = ({ card: cardFaceUp }) => {
   if (cardFaceUp === "") {
     return null;
   } else {

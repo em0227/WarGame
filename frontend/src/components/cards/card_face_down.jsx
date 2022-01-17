@@ -1,7 +1,6 @@
 import React from "react";
 
-const CardFaceDown = (props) => {
-  const cardFaceDown = props.card;
+const CardFaceDown = ({card: cardFaceDown}) => {
 
   if (cardFaceDown.length === 0) {
     return null;

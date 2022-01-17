@@ -17,80 +17,31 @@ class Game extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const {
-      cardUpP1,
-      cardUpP2,
-      addCardToDiscard,
-      clearCard,
-      deckP1,
-      deckP2,
-      movePileToDeck,
-    } = this.props;
-    if (
+    const { cardUpP1, cardUpP2 } = this.props;
+
+    const afterDraw =
       cardUpP1 !== "" &&
       cardUpP2 !== "" &&
-      prevProps.cardUpP1 !== this.props.cardUpP1
-    ) {
+      prevProps.cardUpP1 !== this.props.cardUpP1;
+
+    if (afterDraw) {
       setTimeout(() => {
-        const result = GameLogic.whoWins(cardUpP1, cardUpP2);
-        let cards;
-        if (result === "war") {
-          //clear timerid
-          //save the cardUp to cardDown = invoke warDraw
-          //may need to add differnt condiiton in the compDidUpdate to address moving cardUp & cardDown to discardPile
-          clearInterval(this.timerId);
-          this.setState({ status: "WAR!!!" });
-          this.warDraw();
-          return;
-        } else if (result === "p2") {
-          if (this.state.status === "WAR!!!") {
-            clearInterval(this.timerId);
-            this.setState({ status: "" });
-            this.draw();
-          }
-          this.setState({ winner: "WINNER: P2" });
-          cards = [cardUpP1, cardUpP2];
-        } else {
-          if (this.state.status === "WAR!!!") {
-            clearInterval(this.timerId);
-            this.setState({ status: "" });
-            this.draw();
-          }
-          this.setState({ winner: "WINNER: P1" });
-          cards = [cardUpP2, cardUpP1];
-        }
-
-        addCardToDiscard(cards, result);
-        clearCard();
-
-        if (deckP1.length === 0) {
-          this.setState({ status: "Move Pile to Deck" });
-          movePileToDeck("p1");
-        }
-        if (deckP2.length === 0) {
-          this.setState({ status: "Move Pile to Deck" });
-          movePileToDeck("p2");
-        }
+        this.round();
       }, 1000);
     }
   }
 
   draw() {
-    const { drawCard, deckP1, deckP2 } = this.props;
-    //poping out from the deck
-    //update global state of deck, cardFaceUp
+    const { drawCard } = this.props;
     this.timerId = setInterval(() => {
-      // if (deckP1.length > 0 && deckP2.length > 0) {
       this.setState({ winner: "", status: "" });
       drawCard();
-      // }
     }, 2000);
 
     // drawCard();
   }
 
   warDraw() {
-    //set new interval on war draw until war ends and call draw again
     const {
       winner,
       deckP1,
@@ -101,33 +52,88 @@ class Game extends React.Component {
       movePileToDeck,
     } = this.props;
 
+    const safeToProceed = deckP1.length >= 2 && deckP2.length >= 2;
+
+    const bothDeckEmpty =
+      deckP1.length < 2 &&
+      discardP1.length > 0 &&
+      deckP2.length < 2 &&
+      discardP2.length > 0;
+
+    const p1DeckEmpty = deckP1.length < 2 && discardP1.length > 0;
+    const p2DeckEmpty = deckP2.length < 2 && discardP2.length > 0;
+    const p2Wins = deckP1.length < 2 && discardP1.length < 1;
+
     this.timerId = setInterval(() => {
-      if (deckP1.length >= 2 && deckP2.length >= 2) {
+      if (safeToProceed) {
         addCardsToFaceDown();
-      } else if (
-        deckP1.length < 2 &&
-        discardP1.length > 0 &&
-        deckP2.length < 2 &&
-        discardP2.length > 0
-      ) {
-        //when both of them ran out of cards in deck
+      } else if (bothDeckEmpty) {
         movePileToDeck("p1");
         movePileToDeck("p2");
         addCardsToFaceDown();
-      } else if (deckP1.length < 2 && discardP1.length > 0) {
-        //when one of them ran out the cards in deck
+      } else if (p1DeckEmpty) {
         movePileToDeck("p1");
         addCardsToFaceDown();
-      } else if (deckP2.length < 2 && discardP2.length > 0) {
-        //when one of them ran out the cards in deck
+      } else if (p2DeckEmpty) {
         movePileToDeck("p2");
         addCardsToFaceDown();
-      } else if (deckP1.length < 2 && discardP1.length < 1) {
+      } else if (p2Wins) {
         winner("P2");
       } else {
         winner("P1");
       }
     }, 2000);
+  }
+
+  stopWar() {
+    if (this.state.status === "WAR!!!") {
+      clearInterval(this.timerId);
+      this.setState({ status: "" });
+      this.draw();
+    }
+  }
+
+  round() {
+    const {
+      cardUpP1,
+      cardUpP2,
+      addCardToDiscard,
+      clearCard,
+      deckP1,
+      deckP2,
+      movePileToDeck,
+    } = this.props;
+
+    const result = GameLogic.whoWins(cardUpP1, cardUpP2);
+    let cards;
+
+    if (result === "war") {
+      this.setState({ status: "WAR!!!" });
+      this.warDraw();
+      return;
+    }
+
+    if (result === "p2") {
+      this.stopWar();
+      this.setState({ winner: "WINNER: P2" });
+      cards = [cardUpP1, cardUpP2];
+    } else {
+      this.stopWar();
+      this.setState({ winner: "WINNER: P1" });
+      cards = [cardUpP2, cardUpP1];
+    }
+
+    addCardToDiscard(cards, result);
+    clearCard();
+
+    if (deckP1.length === 0) {
+      this.setState({ status: "Move P1 Pile to Deck" });
+      movePileToDeck("p1");
+    }
+    if (deckP2.length === 0) {
+      this.setState({ status: "Move P2 Pile to Deck" });
+      movePileToDeck("p2");
+    }
   }
 
   render() {
@@ -144,11 +150,13 @@ class Game extends React.Component {
       lifetimeWinsP2,
       updatePlayerData,
     } = this.props;
-    const p1 = deckP1.length === 0 && cardUpP1 === "" && discardP1.length === 0;
-    const p2 = deckP2.length === 0 && cardUpP2 === "" && discardP2.length === 0;
-    if (p1 || p2 || finalWinner !== "") {
+    const p2Wins =
+      deckP1.length === 0 && cardUpP1 === "" && discardP1.length === 0;
+    const p1Wins =
+      deckP2.length === 0 && cardUpP2 === "" && discardP2.length === 0;
+    if (p1Wins || p2Wins || finalWinner !== "") {
       clearInterval(this.timerId); //won't be able to show the last round winner as it will render this
-      if (p2) {
+      if (p2Wins) {
         //final winner is p2
         //can't set winner in global state while other stuff rendering, will just set up API call directly here
         // winner("P1");

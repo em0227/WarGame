@@ -2,9 +2,7 @@ import React from "react";
 import CardFaceUp from "../cards/card_face_up";
 import CardFaceDown from "../cards/card_face_down";
 
-const Deck = (props) => {
-  const { deck, cardFaceUp, cardFaceDown, id } = props;
-
+const Deck = ({ cardFaceUp, cardFaceDown }) => {
   return (
     <div style={{ display: "flex" }}>
       <div
