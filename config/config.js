@@ -7,9 +7,7 @@ const options = {
   query: (e) => {
     console.log(e.query);
   },
-  ssl: {
-    rejectUnauthorized: false,
-  },
+  // rejectUnauthorized: false,
 };
 const pgp = require("pg-promise")(options);
 
