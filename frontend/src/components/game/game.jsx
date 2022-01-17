@@ -160,12 +160,12 @@ class Game extends React.Component {
     if (p2Wins && finalWinner === "") {
       //final winner is p2
       //can't set winner in global state while other stuff rendering, will just set up API call directly here
-      winner("P2");
+      winner("Player 2");
       updatePlayerData({ playerID: 2 });
       return true;
     } else if (p1Wins && finalWinner === "") {
       //final winner is p1
-      winner("P1");
+      winner("Player 1");
       updatePlayerData({ playerID: 1 });
       return true;
     } else if (finalWinner !== "") {
@@ -175,7 +175,7 @@ class Game extends React.Component {
   }
 
   render() {
-    const { lifetimeWinsP1, lifetimeWinsP2 } = this.props;
+    const { lifetimeWinsP1, lifetimeWinsP2, finalWinner } = this.props;
 
     if (this.state.isGameOver) {
       clearInterval(this.timerId); //won't be able to show the last round winner as it will render this
@@ -183,6 +183,7 @@ class Game extends React.Component {
         <div>
           <p>Player 1 Lifetime Wins: {lifetimeWinsP1}</p>
           <p>Player 2 Lifetime Wins: {lifetimeWinsP2}</p>
+          <p>Winner: {finalWinner}</p>
           <p style={{ color: "red" }}>Game Over!</p>
         </div>
       );

@@ -96,7 +96,6 @@ export default (state = _default_state, action) => {
       const p2_card = newState.p2.deck.pop();
       newState.p1.cardFaceUp = p1_card;
       newState.p2.cardFaceUp = p2_card;
-      // debugger;
       return newState;
     case ADD_CARDS_TO_FACEDOWN:
       //add current cardFaceUp to cardFaceDown
