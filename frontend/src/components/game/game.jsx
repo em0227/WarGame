@@ -142,6 +142,7 @@ class Game extends React.Component {
       finalWinner,
       lifetimeWinsP1,
       lifetimeWinsP2,
+      updatePlayerData,
     } = this.props;
     const p1 = deckP1.length === 0 && cardUpP1 === "" && discardP1.length === 0;
     const p2 = deckP2.length === 0 && cardUpP2 === "" && discardP2.length === 0;
@@ -151,9 +152,11 @@ class Game extends React.Component {
         //final winner is p2
         //can't set winner in global state while other stuff rendering, will just set up API call directly here
         // winner("P1");
+        // updatePlayerData({ playerID: 1 });
       } else {
         //final winner is p1
         // winner("P2");
+        // updatePlayerData({ playerID: 2 });
       }
       return (
         <div>

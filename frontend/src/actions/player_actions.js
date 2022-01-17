@@ -19,8 +19,8 @@ export const fetchPlayerData = () => (dispatch) =>
     (err) => dispatch(receivePlayerDataErr(err.response.data))
   );
 
-export const updatePlayerData = () => (dispatch) =>
-  PlayerAPIUtil.updateLifetimeWins().then(
+export const updatePlayerData = (playerID) => (dispatch) =>
+  PlayerAPIUtil.updateLifetimeWins(playerID).then(
     (data) => dispatch(receivePlayerData(data.data)),
     (err) => dispatch(receivePlayerDataErr(err.response.data))
   );

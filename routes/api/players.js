@@ -21,6 +21,7 @@ router.get("/", (req, res) => {
 
 //update
 router.patch("/", (req, res) => {
+  // console.log(req.body);
   const { playerID } = req.body;
   let lifetimeWins;
   db.any(`SELECT lifetime_wins FROM players WHERE id = ${playerID}`).then(
@@ -31,17 +32,16 @@ router.patch("/", (req, res) => {
       db.none(`UPDATE players SET lifetime_wins = $1 WHERE id = $2`, [
         lifetimeWins,
         playerID,
-      ])
-        .then((data) =>
-          res
-            .json({
-              success: true,
-              msg: `player ${playerID} wins updated`,
-              data,
-            })
-            .status(200)
-        )
-        .catch((err) => res.json({ err }).status(400));
+      ]).then(() => {
+        db.any(`SELECT id, lifetime_wins FROM players`)
+          .then((data) => {
+            let result = {};
+            result[data[0].id] = data[0];
+            result[data[1].id] = data[1];
+            res.json(result).status(200);
+          })
+          .catch((err) => res.json({ err }).status(400));
+      });
     }
   );
 });
