@@ -1,8 +1,45 @@
 const express = require("express");
 const router = express.Router();
-const Player = require("../../models/Players");
+const db = require("../../config/config");
 
-//players/update
-//players/get
+router.get("/test", (req, res) => {
+  res.json("this is the players test route");
+});
+
+//get
+router.get("/", (req, res) => {
+  db.any(`SELECT username, lifetime_wins FROM players`)
+    .then((data) => {
+      res.json(data).status(200);
+    })
+    .catch((err) => res.json({ err }).status(400));
+});
+
+//update
+router.patch("/", (req, res) => {
+  const { playerID } = req.body;
+  let lifetimeWins;
+  db.any(`SELECT lifetime_wins FROM players WHERE id = ${playerID}`).then(
+    (data) => {
+      lifetimeWins = data[0].lifetime_wins;
+      lifetimeWins += 1;
+
+      db.none(`UPDATE players SET lifetime_wins = $1 WHERE id = $2`, [
+        lifetimeWins,
+        playerID,
+      ])
+        .then((data) =>
+          res
+            .json({
+              success: true,
+              msg: `player ${playerID} wins updated`,
+              data,
+            })
+            .status(200)
+        )
+        .catch((err) => res.json({ err }).status(400));
+    }
+  );
+});
 
 module.exports = router;

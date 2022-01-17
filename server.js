@@ -15,7 +15,8 @@ if (process.env.NODE_ENV === "production") {
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use("api/player", players);
+// app.get("/", (req, res) => res.send("Hello World"));
+app.use("/api/players", players);
 
 const port = process.env.PORT || 5000;
 
