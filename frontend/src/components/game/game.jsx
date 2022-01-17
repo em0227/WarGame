@@ -32,6 +32,11 @@ class Game extends React.Component {
     }
   }
 
+  startGame() {
+    this.props.createGame();
+    this.draw();
+  }
+
   draw() {
     const { drawCard } = this.props;
     this.timerId = setInterval(() => {
@@ -150,6 +155,8 @@ class Game extends React.Component {
       updatePlayerData,
       winner,
       finalWinner,
+      updateGame,
+      gameID,
     } = this.props;
 
     const p2Wins =
@@ -162,11 +169,13 @@ class Game extends React.Component {
       //can't set winner in global state while other stuff rendering, will just set up API call directly here
       winner("Player 2");
       updatePlayerData({ playerID: 2 });
+      updateGame({gameID});
       return true;
     } else if (p1Wins && finalWinner === "") {
       //final winner is p1
       winner("Player 1");
       updatePlayerData({ playerID: 1 });
+      updateGame({gameID});
       return true;
     } else if (finalWinner !== "") {
       return true;
@@ -196,7 +205,7 @@ class Game extends React.Component {
           <PlayerContainer playerId="p2" />
           <div style={{ color: "red" }}>{this.state.winner}</div>
           <div style={{ color: "red" }}>{this.state.status}</div>
-          <button onClick={this.draw.bind(this)}>Play</button>
+          <button onClick={this.startGame.bind(this)}>Play</button>
         </div>
       );
     }

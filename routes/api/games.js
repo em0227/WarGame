@@ -7,32 +7,35 @@ router.get("/test", (req, res) => {
 });
 
 router.post("/", (req, res) => {
-  // console.log(req.body);
-  const { status } = req.body;
+  const status = "start";
   return db
     .one(
-      `INSERT into games(status) VALUES($1) RETURNING id, status`,
+      `INSERT into games(status) VALUES($1) RETURNING id`,
       [status],
-      (a) => [a.id, a.status]
+      (a) => a.id
     )
     .then((data) => {
       const result = {};
-      result.id = parseInt(data[0]);
-      result.status = data[1];
+      result.id = parseInt(data);
       res.json(result).status(200);
     })
-    .catch((err) => res.json({ err }).status(400));
+    .catch((err) => {
+      res.json({ err }).status(400);
+    });
 });
 
 router.patch("/", (req, res) => {
-  // console.log(req.body);
-  const { status, gameID } = req.body;
+  const status = "finished";
+  const { gameID } = req.body;
 
   db.none(`UPDATE games SET status = $1 WHERE id = $2`, [status, gameID])
     .then(() => {
       res.status(200);
     })
-    .catch((err) => res.json({ err }).status(400));
+    .catch((err) => {
+      console.log(err);
+      res.status(400);
+    });
 });
 
 module.exports = router;

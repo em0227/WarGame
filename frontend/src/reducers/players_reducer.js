@@ -138,7 +138,6 @@ export default (state = _default_state, action) => {
       newState[action.playerId].discardPile = [];
       return newState;
     case RECEIVE_PLAYER_DATA:
-      console.log(action.data);
       if (action.data["1"]) {
         newState.p1.lifetimeWins = action.data["1"].lifetime_wins;
       }

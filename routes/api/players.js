@@ -21,7 +21,6 @@ router.get("/", (req, res) => {
 
 //update
 router.patch("/", (req, res) => {
-  // console.log(req.body);
   const { playerID } = req.body;
   let lifetimeWins;
   db.any(`SELECT lifetime_wins FROM players WHERE id = ${playerID}`).then(
