@@ -8,9 +8,13 @@ router.get("/test", (req, res) => {
 
 //get
 router.get("/", (req, res) => {
-  db.any(`SELECT username, lifetime_wins FROM players`)
+  db.any(`SELECT id, lifetime_wins FROM players`)
     .then((data) => {
-      res.json(data).status(200);
+      let result = {};
+      result[data[0].id] = data[0];
+      result[data[1].id] = data[1];
+
+      res.json(result).status(200);
     })
     .catch((err) => res.json({ err }).status(400));
 });

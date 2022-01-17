@@ -12,6 +12,10 @@ class Game extends React.Component {
     };
   }
 
+  componentDidMount() {
+    this.props.fetchPlayerData();
+  }
+
   componentDidUpdate(prevProps) {
     const {
       cardUpP1,
@@ -136,6 +140,8 @@ class Game extends React.Component {
       discardP2,
       winner,
       finalWinner,
+      lifetimeWinsP1,
+      lifetimeWinsP2,
     } = this.props;
     const p1 = deckP1.length === 0 && cardUpP1 === "" && discardP1.length === 0;
     const p2 = deckP2.length === 0 && cardUpP2 === "" && discardP2.length === 0;
@@ -149,10 +155,18 @@ class Game extends React.Component {
         //final winner is p1
         // winner("P2");
       }
-      return <div style={{ color: "red" }}>Game Over!</div>;
+      return (
+        <div>
+          <p>Player 1 Lifetime Wins: {lifetimeWinsP1}</p>
+          <p>Player 2 Lifetime Wins: {lifetimeWinsP2}</p>
+          <p style={{ color: "red" }}>Game Over!</p>
+        </div>
+      );
     } else {
       return (
         <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <p>Player 1 Lifetime Wins: {lifetimeWinsP1}</p>
+          <p>Player 2 Lifetime Wins: {lifetimeWinsP2}</p>
           <PlayerContainer playerId="p1" />
           <PlayerContainer playerId="p2" />
           <div style={{ color: "red" }}>{this.state.winner}</div>

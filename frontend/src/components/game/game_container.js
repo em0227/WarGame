@@ -9,6 +9,10 @@ import {
   clearCard,
   addCardsToFaceDown,
 } from "../../actions/cards_actions";
+import {
+  fetchPlayerData,
+  updatePlayerData,
+} from "../../actions/player_actions";
 import { winner } from "../../actions/winner_action";
 
 const mapStateToProps = (state) => ({
@@ -19,6 +23,8 @@ const mapStateToProps = (state) => ({
   discardP1: state.players.p1.discardPile,
   discardP2: state.players.p2.discardPile,
   finalWinner: state.winner,
+  lifetimeWinsP1: state.players.p1.lifetimeWins,
+  lifetimeWinsP2: state.players.p2.lifetimeWins,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -29,6 +35,8 @@ const mapDispatchToProps = (dispatch) => ({
   movePileToDeck: (playerId) => dispatch(movePileToDeck(playerId)),
   winner: (player) => dispatch(winner(player)),
   addCardsToFaceDown: () => dispatch(addCardsToFaceDown()),
+  fetchPlayerData: () => dispatch(fetchPlayerData()),
+  updatePlayerData: (playerID) => dispatch(updatePlayerData(playerID)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);

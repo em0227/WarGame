@@ -8,15 +8,18 @@ import {
   ADD_CARDS_TO_DISCARD,
   MOVE_PILE_TO_DECK,
 } from "../actions/discard_pile_actions";
+
+import { RECEIVE_PLAYER_DATA } from "../actions/player_actions";
+
 import { startGame } from "../reducers/selector";
 
 const cards = startGame();
-const deckOne = cards[0];
-const deckTwo = cards[1];
+// const deckOne = cards[0];
+// const deckTwo = cards[1];
 // smaller test cases
 // move pile to deck
-// const deckOne = ["13 club", "14 spade", "9 heart"];
-// const deckTwo = ["11 spade", "12 heart", "10 spade"];
+const deckOne = ["13 club", "14 spade", "9 heart"];
+const deckTwo = ["11 spade", "12 heart", "10 spade"];
 // war
 // const deckOne = ["14 heart", "13 club", "14 spade", "9 heart"];
 // const deckTwo = ["10 spade", "11 spade", "12 heart", "9 diamond"];
@@ -134,6 +137,13 @@ export default (state = _default_state, action) => {
       const pile = newState[action.playerId].discardPile;
       newState[action.playerId].deck = pile;
       newState[action.playerId].discardPile = [];
+      return newState;
+    case RECEIVE_PLAYER_DATA:
+      console.log(action.data);
+      const p1_wins = action.data["1"].lifetime_wins;
+      const p2_wins = action.data["2"].lifetime_wins;
+      newState.p1.lifetimeWins = p1_wins;
+      newState.p2.lifetimeWins = p2_wins;
       return newState;
     default:
       return state;
