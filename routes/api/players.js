@@ -1,5 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const db = require("../../config/config");
+const Player = require("../../models/Players");
+
+//players/update
+//players/get
 
 module.exports = router;

@@ -76,10 +76,10 @@ class Game extends React.Component {
     //poping out from the deck
     //update global state of deck, cardFaceUp
     this.timerId = setInterval(() => {
-      if (deckP1.length > 0 && deckP2.length > 0) {
-        this.setState({ winner: "", status: "" });
-        drawCard();
-      }
+      // if (deckP1.length > 0 && deckP2.length > 0) {
+      this.setState({ winner: "", status: "" });
+      drawCard();
+      // }
     }, 2000);
 
     // drawCard();
@@ -100,10 +100,22 @@ class Game extends React.Component {
     this.timerId = setInterval(() => {
       if (deckP1.length >= 2 && deckP2.length >= 2) {
         addCardsToFaceDown();
+      } else if (
+        deckP1.length < 2 &&
+        discardP1.length > 0 &&
+        deckP2.length < 2 &&
+        discardP2.length > 0
+      ) {
+        //when both of them ran out of cards in deck
+        movePileToDeck("p1");
+        movePileToDeck("p2");
+        addCardsToFaceDown();
       } else if (deckP1.length < 2 && discardP1.length > 0) {
+        //when one of them ran out the cards in deck
         movePileToDeck("p1");
         addCardsToFaceDown();
       } else if (deckP2.length < 2 && discardP2.length > 0) {
+        //when one of them ran out the cards in deck
         movePileToDeck("p2");
         addCardsToFaceDown();
       } else if (deckP1.length < 2 && discardP1.length < 1) {
