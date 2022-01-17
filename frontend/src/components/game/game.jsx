@@ -9,6 +9,7 @@ class Game extends React.Component {
     this.state = {
       winner: "",
       status: "",
+      isGameOver: false,
     };
   }
 
@@ -134,9 +135,11 @@ class Game extends React.Component {
       this.setState({ status: "Move P2 Pile to Deck" });
       movePileToDeck("p2");
     }
+
+    this.setState({ isGameOver: this.gameOver() });
   }
 
-  render() {
+  gameOver() {
     const {
       deckP1,
       deckP2,
@@ -144,28 +147,38 @@ class Game extends React.Component {
       cardUpP2,
       discardP1,
       discardP2,
+      updatePlayerData,
       winner,
       finalWinner,
-      lifetimeWinsP1,
-      lifetimeWinsP2,
-      updatePlayerData,
     } = this.props;
+
     const p2Wins =
       deckP1.length === 0 && cardUpP1 === "" && discardP1.length === 0;
     const p1Wins =
       deckP2.length === 0 && cardUpP2 === "" && discardP2.length === 0;
-    if (p1Wins || p2Wins || finalWinner !== "") {
+
+    if (p2Wins && finalWinner === "") {
+      //final winner is p2
+      //can't set winner in global state while other stuff rendering, will just set up API call directly here
+      winner("P2");
+      updatePlayerData({ playerID: 2 });
+      return true;
+    } else if (p1Wins && finalWinner === "") {
+      //final winner is p1
+      winner("P1");
+      updatePlayerData({ playerID: 1 });
+      return true;
+    } else if (finalWinner !== "") {
+      return true;
+    }
+    return false;
+  }
+
+  render() {
+    const { lifetimeWinsP1, lifetimeWinsP2 } = this.props;
+
+    if (this.state.isGameOver) {
       clearInterval(this.timerId); //won't be able to show the last round winner as it will render this
-      if (p2Wins) {
-        //final winner is p2
-        //can't set winner in global state while other stuff rendering, will just set up API call directly here
-        // winner("P1");
-        // updatePlayerData({ playerID: 1 });
-      } else {
-        //final winner is p1
-        // winner("P2");
-        // updatePlayerData({ playerID: 2 });
-      }
       return (
         <div>
           <p>Player 1 Lifetime Wins: {lifetimeWinsP1}</p>

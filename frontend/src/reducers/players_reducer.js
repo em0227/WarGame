@@ -17,16 +17,16 @@ const cards = startGame();
 // const deckOne = cards[0];
 // const deckTwo = cards[1];
 // smaller test cases
-// move pile to deck
+// 1. MOVE PILE TO DECK
 const deckOne = ["13 club", "14 spade", "9 heart"];
 const deckTwo = ["11 spade", "12 heart", "10 spade"];
-// war
+// 2. WAR
 // const deckOne = ["14 heart", "13 club", "14 spade", "9 heart"];
 // const deckTwo = ["10 spade", "11 spade", "12 heart", "9 diamond"];
-// multiwar
+// 3. MULTIWAR
 // const deckOne = ["14 heart", "13 club", "9 heart", "14 spade", "10 club"];
 // const deckTwo = ["10 spade", "11 spade", "9 diamond", "12 heart", "10 heart"];
-// war and deck has less than 1 card but there's pile
+// 4. DURING WAR && DECK has 1 card left && PILE has more
 // const deckOne = [
 //   "14 heart",
 //   "13 club",
@@ -47,7 +47,7 @@ const deckTwo = ["11 spade", "12 heart", "10 spade"];
 //   "12 heart",
 //   "10 spade",
 // ];
-// war ends with two players ran out of cards at the same time
+// 5. WAR ENDS && BOTH PLAYERS DECK EMPTY && PILE has more
 // const deckOne = [
 //   "13 club",
 //   "9 heart",
