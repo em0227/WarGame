@@ -30,11 +30,10 @@ router.patch("/", (req, res) => {
 
   db.none(`UPDATE games SET status = $1 WHERE id = $2`, [status, gameID])
     .then(() => {
-      res.status(200);
+      res.json({ success: true }).status(200);
     })
     .catch((err) => {
-      console.log(err);
-      res.status(400);
+      res.json({ err }).status(400);
     });
 });
 
