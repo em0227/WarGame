@@ -29,19 +29,20 @@ router.patch("/", (req, res) => {
       lifetimeWins = data[0].lifetime_wins;
       lifetimeWins += 1;
 
-      db.none(`UPDATE players SET lifetime_wins = $1 WHERE id = $2`, [
-        lifetimeWins,
-        playerID,
-      ]).then(() => {
-        db.any(`SELECT id, lifetime_wins FROM players`)
-          .then((data) => {
-            let result = {};
-            result[data[0].id] = data[0];
-            result[data[1].id] = data[1];
-            res.json(result).status(200);
-          })
-          .catch((err) => res.json({ err }).status(400));
-      });
+      db.one(
+        `UPDATE players SET lifetime_wins = $1 WHERE id = $2 RETURNING id, lifetime_wins`,
+        [lifetimeWins, playerID],
+        (a) => [a.id, a.lifetime_wins]
+      )
+        .then((data) => {
+          const result = {};
+          const playerId = data[0];
+          result[playerId] = {};
+          result[playerId].id = parseInt(data[0]);
+          result[playerId].lifetime_wins = data[1];
+          res.json(result).status(200);
+        })
+        .catch((err) => res.json({ err }).status(400));
     }
   );
 });

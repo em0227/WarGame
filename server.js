@@ -4,6 +4,7 @@ const app = express(); // INITILIZE APP
 const path = require("path");
 const bodyParser = require("body-parser");
 const players = require("./routes/api/players");
+const games = require("./routes/api/games");
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("frontend/build"));
@@ -17,6 +18,7 @@ app.use(bodyParser.json());
 
 // app.get("/", (req, res) => res.send("Hello World"));
 app.use("/api/players", players);
+app.use("/api/games", games);
 
 const port = process.env.PORT || 5000;
 

@@ -139,10 +139,12 @@ export default (state = _default_state, action) => {
       return newState;
     case RECEIVE_PLAYER_DATA:
       console.log(action.data);
-      const p1_wins = action.data["1"].lifetime_wins;
-      const p2_wins = action.data["2"].lifetime_wins;
-      newState.p1.lifetimeWins = p1_wins;
-      newState.p2.lifetimeWins = p2_wins;
+      if (action.data["1"]) {
+        newState.p1.lifetimeWins = action.data["1"].lifetime_wins;
+      }
+      if (action.data["2"]) {
+        newState.p2.lifetimeWins = action.data["2"].lifetime_wins;
+      }
       return newState;
     default:
       return state;
