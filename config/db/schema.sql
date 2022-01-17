@@ -1,6 +1,6 @@
 
-DROP DATABASE IF EXISTS war_game;
-CREATE DATABASE war_game;
+-- DROP DATABASE IF EXISTS war_game;
+-- CREATE DATABASE war_game;
 
 \c war_game;
 
