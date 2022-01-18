@@ -76,6 +76,13 @@ const deckTwo = cards[1];
 // ];
 // const deckTwo = ["2 club", "9 diamond", "12 heart", "10 heart", "11 spade"];
 
+//7. WAR, Move pile to deck during Add cards to facedown (causing wether war ends or not end)
+
+// const deckOne = ["9 spade", "13 heart", "14 heart"];
+// const deckTwo = ["9 club", "11 diamond", "11 diamond"];
+// const deckOne = ["9 spade", "13 heart"];
+// const deckTwo = ["9 club", "11 diamond"];
+
 const _default_state = {
   p1: {
     cardFaceUp: "",
@@ -113,6 +120,8 @@ export default (state = _default_state, action) => {
       const currentUpP2 = newState.p2.cardFaceUp;
       newState.p1.cardFaceDown.push(currentUpP1);
       newState.p2.cardFaceDown.push(currentUpP2);
+      console.log("p1 deck", newState.p1.deck);
+      console.log("p2 deck", newState.p1.deck);
       const newCardDownP1 = newState.p1.deck.pop();
       const newCardDownP2 = newState.p2.deck.pop();
       newState.p1.cardFaceDown.push(newCardDownP1);

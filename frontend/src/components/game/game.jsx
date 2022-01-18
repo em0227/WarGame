@@ -8,7 +8,9 @@ class Game extends React.Component {
     this.timerId = null;
     this.state = {
       winner: "",
-      status: "",
+      warStatus: "",
+      dndStatus: "",
+      finalStatus: "",
     };
   }
 
@@ -39,7 +41,7 @@ class Game extends React.Component {
   draw() {
     const { drawCard } = this.props;
     this.timerId = setInterval(() => {
-      this.setState({ winner: "", status: "" });
+      this.setState({ winner: "", warStatus: "", dndStatus: "" });
       drawCard();
     }, 2000);
 
@@ -68,36 +70,39 @@ class Game extends React.Component {
     const p1DeckEmpty = deckP1.length < 2 && discardP1.length > 0;
     const p2DeckEmpty = deckP2.length < 2 && discardP2.length > 0;
     const p2Wins = deckP1.length < 2 && discardP1.length < 1;
+    const p1Wins = deckP2.length < 2 && discardP2.length < 1;
 
     this.timerId = setInterval(() => {
-      if (safeToProceed) {
+      if (p2Wins) {
+        this.setState({ finalStatus: "P1 out of cards" });
+        winner("P2");
+      } else if (p1Wins) {
+        this.setState({ finalStatus: "P2 out of cards" });
+        winner("P1");
+      } else if (safeToProceed) {
         addCardsToFaceDown();
       } else if (bothDeckEmpty) {
         movePileToDeck("p1");
         movePileToDeck("p2");
-        this.setState({ status: "Move P1 & P2 Pile to Deck" });
+        this.setState({ dndStatus: "Move P1 & P2 Pile to Deck" });
         addCardsToFaceDown();
       } else if (p1DeckEmpty) {
         movePileToDeck("p1");
-        this.setState({ status: "Move P1 Pile to Deck" });
+        this.setState({ dndStatus: "Move P1 Pile to Deck" });
         addCardsToFaceDown();
       } else if (p2DeckEmpty) {
         movePileToDeck("p2");
-        this.setState({ status: "Move P2 Pile to Deck" });
+        this.setState({ dndStatus: "Move P2 Pile to Deck" });
         addCardsToFaceDown();
-      } else if (p2Wins) {
-        winner("P2");
-      } else {
-        winner("P1");
       }
     }, 2000);
   }
 
   stopWar() {
-    if (this.state.status === "WAR!!!") {
+    if (this.state.warStatus === "WAR!!!") {
       clearInterval(this.timerId);
       this.timerId = null;
-      this.setState({ status: "" });
+      this.setState({ warStatus: "", dndStatus: "" });
       // this.draw();
     }
   }
@@ -122,18 +127,18 @@ class Game extends React.Component {
     if (result === "war") {
       clearInterval(this.timerId);
       this.timerId = null;
-      this.setState({ status: "WAR!!!", winner: "" });
+      this.setState({ warStatus: "WAR!!!", winner: "", dndStatus: "" });
       this.warDraw();
       return;
     }
 
     if (result === "p2") {
       this.stopWar();
-      this.setState({ winner: "WINNER: P2" });
+      this.setState({ winner: "WINNER: P2", dndStatus: "" });
       cards = [cardUpP1, cardUpP2];
     } else {
       this.stopWar();
-      this.setState({ winner: "WINNER: P1" });
+      this.setState({ winner: "WINNER: P1", dndStatus: "" });
       cards = [cardUpP2, cardUpP1];
     }
 
@@ -143,14 +148,14 @@ class Game extends React.Component {
     this.gameOver();
 
     if (deckP1.length === 0 && deckP2.length === 0 && finalWinner === "") {
-      this.setState({ status: "Move P1 & P2 Pile to Deck" });
+      this.setState({ dndStatus: "Move P1 & P2 Pile to Deck" });
       movePileToDeck("p1");
       movePileToDeck("p2");
     } else if (deckP2.length === 0 && finalWinner === "") {
-      this.setState({ status: "Move P2 Pile to Deck" });
+      this.setState({ dndStatus: "Move P2 Pile to Deck" });
       movePileToDeck("p2");
     } else if (deckP1.length === 0 && finalWinner === "") {
-      this.setState({ status: "Move P1 Pile to Deck" });
+      this.setState({ dndStatus: "Move P1 Pile to Deck" });
       movePileToDeck("p1");
     }
     if (
@@ -194,7 +199,7 @@ class Game extends React.Component {
   }
 
   restart() {
-    this.setState({ winner: "", status: "" });
+    this.setState({ winner: "", dndStatus: "", warStatus: "" });
     this.props.restart();
   }
 
@@ -206,6 +211,7 @@ class Game extends React.Component {
       return (
         <div className="game">
           <p id="last">Winner: {finalWinner}</p>
+          <div id="last">{this.state.finalStatus}</div>
           <p id="last" style={{ color: "red" }}>
             Game Over!
           </p>
@@ -221,7 +227,8 @@ class Game extends React.Component {
           </div>
 
           <div className="status">{this.state.winner}</div>
-          <div className="status">{this.state.status}</div>
+          <div className="status">{this.state.warStatus}</div>
+          <div className="status">{this.state.dndStatus}</div>
           <button onClick={this.startGame.bind(this)}>Play</button>
         </div>
       );
