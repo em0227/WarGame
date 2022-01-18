@@ -2,7 +2,7 @@
 
 ## How to Play Instructions
 
-The game is LIVE on heroku! You can simply go to [HERE](https://war-game-emily.herokuapp.com/), click the button ‘Play’ and two simulated players will start playing.
+The game is LIVE on heroku! You can simply go to <a href="https://war-game-emily.herokuapp.com/" target="_blank">HERE</a>, then click the button ‘Play’ and two simulated players will start playing.
 
 If you wish to see what the development mode looks like, you can follow the steps:
 
@@ -11,7 +11,7 @@ If you wish to see what the development mode looks like, you can follow the step
 3. run `psql -f ./config/db/schema.sql`at the root directory to set up the database at your local postgresql db
 4. run `npm install` at the frontend directory set up your frontend environment
 5. run `npm run dev` to run the app, you shall see it running on localhost: 3000
-6. you can test the game with the 6 test cases I came up with. Find the file "players_reducer" and comment out line 15 and comment in line 16. Feel free to switch between test cases at the file ["test_case"](https://github.com/em0227/WarGame/blob/main/frontend/src/reducers/test_case.js).
+6. you can test the game with the 6 test cases I came up with. Find the file "players_reducer" and comment out line 15 and comment in line 16. Feel free to switch between test cases at the file <a href="https://github.com/em0227/WarGame/blob/main/frontend/src/reducers/test_case.js" target="_blank">"test_case"</a>.
 
 ---
 
