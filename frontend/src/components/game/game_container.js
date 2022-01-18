@@ -12,6 +12,7 @@ import {
 import {
   fetchPlayerData,
   updatePlayerData,
+  restart,
 } from "../../actions/player_actions";
 import { winner } from "../../actions/winner_action";
 import { createGame } from "../../actions/game_actions";
@@ -42,6 +43,7 @@ const mapDispatchToProps = (dispatch) => ({
   updatePlayerData: (playerID) => dispatch(updatePlayerData(playerID)),
   createGame: () => dispatch(createGame()),
   updateGame: (gameID) => updateGame(gameID),
+  restart: () => dispatch(restart()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);

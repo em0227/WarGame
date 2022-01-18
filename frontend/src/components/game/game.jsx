@@ -143,15 +143,17 @@ class Game extends React.Component {
     this.gameOver();
     // this.setState({ isGameOver: this.gameOver() });
 
-    if (deckP1.length === 0 && finalWinner === "") {
+    if (deckP1.length === 0 && deckP2.length === 0 && finalWinner === "") {
+      this.setState({ status: "Move P1 & P2 Pile to Deck" });
+      movePileToDeck("p1");
+      movePileToDeck("p2");
+    } else if (deckP2.length === 0 && finalWinner === "") {
+      this.setState({ status: "Move P2 Pile to Deck" });
+      movePileToDeck("p2");
+    } else if (deckP1.length === 0 && finalWinner === "") {
       this.setState({ status: "Move P1 Pile to Deck" });
       movePileToDeck("p1");
     }
-    if (deckP2.length === 0 && finalWinner === "") {
-      this.setState({ status: "Move P2 Pile to Deck" });
-      movePileToDeck("p2");
-    }
-
     if (!this.timerId && deckP1.length !== 0 && deckP2.length !== 0) {
       this.draw();
     }
@@ -197,7 +199,7 @@ class Game extends React.Component {
   }
 
   restart() {
-    //clear out winner and deck and discard state
+    this.props.restart();
   }
 
   render() {
@@ -211,7 +213,7 @@ class Game extends React.Component {
           <p id="last" style={{ color: "red" }}>
             Game Over!
           </p>
-          <button onClick={this.restart.bind.this}>Restart</button>
+          <button onClick={this.restart.bind(this)}>Restart</button>
         </div>
       );
     } else {

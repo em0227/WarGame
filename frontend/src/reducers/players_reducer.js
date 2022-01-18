@@ -9,24 +9,24 @@ import {
   MOVE_PILE_TO_DECK,
 } from "../actions/discard_pile_actions";
 
-import { RECEIVE_PLAYER_DATA } from "../actions/player_actions";
+import { RECEIVE_PLAYER_DATA, RESTART } from "../actions/player_actions";
 
 import { startGame } from "../reducers/selector";
 
 const cards = startGame();
-const deckOne = cards[0];
-const deckTwo = cards[1];
+// const deckOne = cards[0];
+// const deckTwo = cards[1];
 // smaller test cases //can't stop the last move pile to deck after there's winner & last scence will go too fast to be seen
 // 1. MOVE PILE TO DECK
-// const deckOne = ["13 club", "14 spade", "9 heart"];
-// const deckTwo = ["11 spade", "12 heart", "10 spade"];
+const deckOne = ["13 club", "14 spade", "9 heart"];
+const deckTwo = ["11 spade", "12 heart", "10 spade"];
 // 2. WAR
 // const deckOne = ["14 heart", "13 club", "14 spade", "9 heart"];
 // const deckTwo = ["10 spade", "11 spade", "12 heart", "9 diamond"];
 // 3. MULTIWAR
 // const deckOne = ["14 heart", "13 club", "9 heart", "14 spade", "10 club"];
 // const deckTwo = ["10 spade", "11 spade", "9 diamond", "12 heart", "10 heart"];
-// 4. DURING WAR && DECK has 1 card left && PILE has more
+// 4. WAR ENDS && BOTH PLAYERS DECK EMPTY && PILE has more
 // const deckOne = [
 //   "14 heart",
 //   "13 club",
@@ -47,7 +47,7 @@ const deckTwo = cards[1];
 //   "12 heart",
 //   "10 spade",
 // ];
-// 5. WAR ENDS && BOTH PLAYERS DECK EMPTY && PILE has more //this is not working
+// 5. DURING WAR && DECK has 1 card left && PILE has more
 // const deckOne = [
 //   "13 club",
 //   "9 heart",
@@ -64,6 +64,17 @@ const deckTwo = cards[1];
 //   "11 spade",
 //   "10 spade",
 // ];
+
+//6. P2 DOESN'T HAVE ENOUGH CARD
+// const deckOne = [
+//   "11 spade",
+//   "13 club",
+//   "9 heart",
+//   "14 spade",
+//   "10 club",
+//   "13 club",
+// ];
+// const deckTwo = ["2 club", "9 diamond", "12 heart", "10 heart", "11 spade"];
 
 const _default_state = {
   p1: {
@@ -142,6 +153,14 @@ export default (state = _default_state, action) => {
       if (action.data["2"]) {
         newState.p2.lifetimeWins = action.data["2"].lifetime_wins;
       }
+      return newState;
+    case RESTART:
+      newState = _default_state;
+      const cards = startGame();
+      const deckOne = cards[0];
+      const deckTwo = cards[1];
+      newState.p1.deck = deckOne;
+      newState.p2.deck = deckTwo;
       return newState;
     default:
       return state;
