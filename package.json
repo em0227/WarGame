@@ -26,14 +26,11 @@
     "bluebird": "^3.7.2",
     "body-parser": "^1.19.1",
     "concurrently": "^7.0.0",
-    "connect-pg-simple": "^7.0.0",
     "dotenv": "^11.0.0",
     "ejs": "^3.1.6",
     "express": "^4.17.2",
-    "express-session": "^1.17.2",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.15",
-    "pg": "^8.7.1",
     "pg-promise": "^10.11.1"
   }
 }

@@ -5,17 +5,21 @@ const DiscardPile = (props) => {
   const discardPile = useSelector(
     (state) => state.players[props.playerId].discardPile
   );
-  if (discardPile.length === 0) return null;
+  const style = discardPile.length !== 0 ? { backgroundColor: "white" } : {};
+  const content =
+    discardPile.length !== 0 ? (
+      <div>
+        <p>Won Cards</p>
+        <p>Last won with:</p>
+        <p>{discardPile[discardPile.length - 1]}</p>
+      </div>
+    ) : (
+      ""
+    );
+
   return (
-    <div
-      style={{
-        backgroundColor: "white",
-        width: "150px",
-        height: "100px",
-      }}
-    >
-      <p>Won Cards</p>
-      <p>{`Last won with: ${discardPile[discardPile.length - 1]}`}</p>
+    <div className="discard" style={style}>
+      {content}
     </div>
   );
 };

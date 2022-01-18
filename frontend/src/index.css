@@ -12,3 +12,92 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  color: white;
+  font-size: 20px;
+  width: 100%;
+}
+
+.game {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.players {
+  display: flex;
+  width: 100%;
+}
+
+.player {
+  display: flex;
+  align-items: center;
+}
+
+.description {
+  display: flex;
+  flex-direction: column;
+  margin: 0 5% 0 10%;
+}
+
+.description p {
+  margin: 0;
+  padding: 0;
+  text-indent: 20px;
+}
+
+#title {
+  /* align-self: center; */
+  margin-top: 20px;
+  text-indent: 0;
+}
+
+.dd {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.discard {
+  width: 100px;
+  height: 150px;
+  margin: 0;
+  border-radius: 0.3rem;
+}
+
+.discard p {
+  text-align: center;
+}
+
+.player-deck {
+  background-color: darkGreen;
+  width: 100px;
+  height: 150px;
+  margin: 100px;
+  border-radius: 0.3rem;
+}
+
+.status {
+  color: red;
+  font-size: 40px;
+  align-self: center;
+  margin-top: 50px;
+}
+
+button {
+  font-size: 30px;
+  padding: 10px 20px 10px 20px;
+  margin: 10px 0 30px 0;
+  width: 100px;
+  align-self: center;
+}

@@ -1,13 +1,16 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
-import PlayerContainer from "./players/player_container";
 import GameContainer from "./game/game_container";
-import { drawCard } from "../actions/cards_actions";
-import { addCardToDiscard } from "../actions/discard_pile_actions";
-import * as GameLogic from "./game/game_logic";
+import Header from "./header/header";
+import Description from "./description/description";
 
 const App = (props) => {
-  return <GameContainer />;
+  return (
+    <div className="container">
+      <Header />
+      <Description />
+      <GameContainer />
+    </div>
+  );
 };
 
 export default App;

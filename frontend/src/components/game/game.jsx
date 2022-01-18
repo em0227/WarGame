@@ -26,9 +26,9 @@ class Game extends React.Component {
       prevProps.cardUpP1 !== this.props.cardUpP1;
 
     if (afterDraw) {
-      setTimeout(() => {
-        this.round();
-      }, 1000);
+      // setTimeout(() => {
+      // this.round();
+      // }, 1000);
     }
   }
 
@@ -39,12 +39,13 @@ class Game extends React.Component {
 
   draw() {
     const { drawCard } = this.props;
-    this.timerId = setInterval(() => {
-      this.setState({ winner: "", status: "" });
-      drawCard();
-    }, 2000);
+    // this.timerId = setInterval(() => {
+    //   this.setState({ winner: "", status: "" });
+    //   drawCard();
 
-    // drawCard();
+    // }, 2000);
+
+    drawCard();
   }
 
   warDraw() {
@@ -169,13 +170,13 @@ class Game extends React.Component {
       //can't set winner in global state while other stuff rendering, will just set up API call directly here
       winner("Player 2");
       updatePlayerData({ playerID: 2 });
-      updateGame({gameID});
+      updateGame({ gameID });
       return true;
     } else if (p1Wins && finalWinner === "") {
       //final winner is p1
       winner("Player 1");
       updatePlayerData({ playerID: 1 });
-      updateGame({gameID});
+      updateGame({ gameID });
       return true;
     } else if (finalWinner !== "") {
       return true;
@@ -183,28 +184,32 @@ class Game extends React.Component {
     return false;
   }
 
+  restart() {
+    //clear out winner and deck and discard state
+  }
+
   render() {
-    const { lifetimeWinsP1, lifetimeWinsP2, finalWinner } = this.props;
+    const { finalWinner } = this.props;
 
     if (this.state.isGameOver) {
       clearInterval(this.timerId); //won't be able to show the last round winner as it will render this
       return (
-        <div>
-          <p>Player 1 Lifetime Wins: {lifetimeWinsP1}</p>
-          <p>Player 2 Lifetime Wins: {lifetimeWinsP2}</p>
+        <div className="game">
           <p>Winner: {finalWinner}</p>
           <p style={{ color: "red" }}>Game Over!</p>
+          <button onClick={this.restart().bind.this}>Restart</button>
         </div>
       );
     } else {
       return (
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <p>Player 1 Lifetime Wins: {lifetimeWinsP1}</p>
-          <p>Player 2 Lifetime Wins: {lifetimeWinsP2}</p>
-          <PlayerContainer playerId="p1" />
-          <PlayerContainer playerId="p2" />
-          <div style={{ color: "red" }}>{this.state.winner}</div>
-          <div style={{ color: "red" }}>{this.state.status}</div>
+        <div className="game">
+          <div className="players">
+            <PlayerContainer playerId="p1" />
+            <PlayerContainer playerId="p2" />
+          </div>
+
+          <div className="status">{this.state.winner}</div>
+          <div className="status">{this.state.status}</div>
           <button onClick={this.startGame.bind(this)}>Play</button>
         </div>
       );

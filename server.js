@@ -3,8 +3,6 @@ const express = require("express"); // BRING IN EXPRESS
 const app = express(); // INITILIZE APP
 const path = require("path");
 const bodyParser = require("body-parser");
-const session = require("express-session");
-const pgSession = require("connect-pg-simple")(session);
 const players = require("./routes/api/players");
 const games = require("./routes/api/games");
 
@@ -17,17 +15,6 @@ if (process.env.NODE_ENV === "production") {
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
-// app.use(
-//   session({
-//     store: new pgSession({
-//       conString: process.env.DATABASE_URL,
-//     }),
-//     secret: process.env.SESSION_SECRET,
-//     resave: false,
-//     cookie: { maxAge: 10 * 10 * 6000000 },
-//   })
-// );
 
 // app.get("/", (req, res) => res.send("Hello World"));
 app.use("/api/players", players);
