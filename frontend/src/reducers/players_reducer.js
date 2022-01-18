@@ -14,19 +14,19 @@ import { RECEIVE_PLAYER_DATA } from "../actions/player_actions";
 import { startGame } from "../reducers/selector";
 
 const cards = startGame();
-// const deckOne = cards[0];
-// const deckTwo = cards[1];
-// smaller test cases
+const deckOne = cards[0];
+const deckTwo = cards[1];
+// smaller test cases //can't stop the last move pile to deck after there's winner & last scence will go too fast to be seen
 // 1. MOVE PILE TO DECK
-const deckOne = ["13 club", "14 spade", "9 heart"];
-const deckTwo = ["11 spade", "12 heart", "10 spade"];
+// const deckOne = ["13 club", "14 spade", "9 heart"];
+// const deckTwo = ["11 spade", "12 heart", "10 spade"];
 // 2. WAR
 // const deckOne = ["14 heart", "13 club", "14 spade", "9 heart"];
 // const deckTwo = ["10 spade", "11 spade", "12 heart", "9 diamond"];
-// 3. MULTIWAR //this is not working
+// 3. MULTIWAR
 // const deckOne = ["14 heart", "13 club", "9 heart", "14 spade", "10 club"];
 // const deckTwo = ["10 spade", "11 spade", "9 diamond", "12 heart", "10 heart"];
-// 4. DURING WAR && DECK has 1 card left && PILE has more //last scence fast
+// 4. DURING WAR && DECK has 1 card left && PILE has more
 // const deckOne = [
 //   "14 heart",
 //   "13 club",
@@ -54,7 +54,6 @@ const deckTwo = ["11 spade", "12 heart", "10 spade"];
 //   "14 spade",
 //   "10 club",
 //   "13 club",
-//   "14 spade",
 //   "9 heart",
 // ];
 // const deckTwo = [
@@ -63,7 +62,6 @@ const deckTwo = ["11 spade", "12 heart", "10 spade"];
 //   "12 heart",
 //   "10 heart",
 //   "11 spade",
-//   "12 heart",
 //   "10 spade",
 // ];
 

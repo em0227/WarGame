@@ -28,7 +28,7 @@ class Game extends React.Component {
     if (afterDraw) {
       setTimeout(() => {
         this.round();
-      }, 1500);
+      }, 1000);
     }
   }
 
@@ -75,25 +75,32 @@ class Game extends React.Component {
         addCardsToFaceDown();
       } else if (bothDeckEmpty) {
         movePileToDeck("p1");
+
         movePileToDeck("p2");
+        this.setState({ status: "Move P1 & P2 Pile to Deck" });
         addCardsToFaceDown();
       } else if (p1DeckEmpty) {
         movePileToDeck("p1");
+        this.setState({ status: "Move P1 Pile to Deck" });
         addCardsToFaceDown();
       } else if (p2DeckEmpty) {
         movePileToDeck("p2");
+        this.setState({ status: "Move P2 Pile to Deck" });
         addCardsToFaceDown();
       } else if (p2Wins) {
         winner("P2");
       } else {
         winner("P1");
       }
-    }, 1500);
+    }, 2000);
   }
 
   stopWar() {
     if (this.state.status === "WAR!!!") {
+      clearInterval(this.timerId);
+      this.timerId = null;
       this.setState({ status: "" });
+      // this.draw();
     }
   }
 
@@ -106,14 +113,15 @@ class Game extends React.Component {
       deckP1,
       deckP2,
       movePileToDeck,
+      finalWinner,
     } = this.props;
-
-    clearInterval(this.timerId);
 
     const result = GameLogic.whoWins(cardUpP1, cardUpP2);
     let cards;
 
     if (result === "war") {
+      clearInterval(this.timerId);
+      this.timerId = null;
       this.setState({ status: "WAR!!!", winner: "" });
       this.warDraw();
       return;
@@ -132,18 +140,19 @@ class Game extends React.Component {
     addCardToDiscard(cards, result);
     clearCard();
 
-    this.setState({ isGameOver: this.gameOver() });
+    this.gameOver();
+    // this.setState({ isGameOver: this.gameOver() });
 
-    if (deckP1.length === 0 && !this.state.isGameOver) {
+    if (deckP1.length === 0 && finalWinner === "") {
       this.setState({ status: "Move P1 Pile to Deck" });
       movePileToDeck("p1");
     }
-    if (deckP2.length === 0 && !this.state.isGameOver) {
+    if (deckP2.length === 0 && finalWinner === "") {
       this.setState({ status: "Move P2 Pile to Deck" });
       movePileToDeck("p2");
     }
 
-    if (!this.state.isGameOver) {
+    if (!this.timerId && deckP1.length !== 0 && deckP2.length !== 0) {
       this.draw();
     }
   }
@@ -174,17 +183,17 @@ class Game extends React.Component {
       winner("Player 2");
       updatePlayerData({ playerID: 2 });
       updateGame({ gameID });
-      return true;
+      // return true;
     } else if (p1Wins && finalWinner === "") {
       //final winner is p1
       winner("Player 1");
       updatePlayerData({ playerID: 1 });
       updateGame({ gameID });
-      return true;
-    } else if (finalWinner !== "") {
-      return true;
+      // return true;
+      // } else if (finalWinner !== "") {
+      // return true;
     }
-    return false;
+    // return false;
   }
 
   restart() {
@@ -194,7 +203,7 @@ class Game extends React.Component {
   render() {
     const { finalWinner } = this.props;
 
-    if (this.state.isGameOver) {
+    if (finalWinner !== "") {
       clearInterval(this.timerId); //won't be able to show the last round winner as it will render this
       return (
         <div className="game">
