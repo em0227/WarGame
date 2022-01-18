@@ -14,12 +14,12 @@ import { RECEIVE_PLAYER_DATA, RESTART } from "../actions/player_actions";
 import { startGame } from "../reducers/selector";
 
 const cards = startGame();
-// const deckOne = cards[0];
-// const deckTwo = cards[1];
+const deckOne = cards[0];
+const deckTwo = cards[1];
 // smaller test cases //can't stop the last move pile to deck after there's winner & last scence will go too fast to be seen
 // 1. MOVE PILE TO DECK
-const deckOne = ["13 club", "14 spade", "9 heart"];
-const deckTwo = ["11 spade", "12 heart", "10 spade"];
+// const deckOne = ["13 club", "14 spade", "9 heart"];
+// const deckTwo = ["11 spade", "12 heart", "10 spade"];
 // 2. WAR
 // const deckOne = ["14 heart", "13 club", "14 spade", "9 heart"];
 // const deckTwo = ["10 spade", "11 spade", "12 heart", "9 diamond"];
