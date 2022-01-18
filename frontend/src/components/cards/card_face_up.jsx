@@ -1,21 +1,13 @@
 import React from "react";
 
 const CardFaceUp = ({ card: cardFaceUp }) => {
-  if (cardFaceUp === "") {
-    return null;
-  } else {
-    return (
-      <div
-        style={{
-          backgroundColor: "white",
-          width: "150px",
-          height: "100px",
-        }}
-      >
-        {cardFaceUp}
-      </div>
-    );
-  }
+  const style = cardFaceUp !== "" ? { backgroundColor: "white" } : {};
+
+  return (
+    <div className="face-up" style={style}>
+      <p>{cardFaceUp}</p>
+    </div>
+  );
 };
 
 export default CardFaceUp;

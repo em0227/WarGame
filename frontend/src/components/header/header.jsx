@@ -7,7 +7,9 @@ const Header = () => {
   return (
     <div className="header">
       <p>Player 1 Lifetime Wins: {lifetimeWinsP1}</p>
-      <p>CARD GAME: WAR</p>
+      <p>
+        <b>CARD GAME: WAR</b>
+      </p>
       <p>Player 2 Lifetime Wins: {lifetimeWinsP2}</p>
     </div>
   );

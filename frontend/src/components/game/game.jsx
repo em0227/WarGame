@@ -26,9 +26,9 @@ class Game extends React.Component {
       prevProps.cardUpP1 !== this.props.cardUpP1;
 
     if (afterDraw) {
-      // setTimeout(() => {
-      // this.round();
-      // }, 1000);
+      setTimeout(() => {
+        this.round();
+      }, 1500);
     }
   }
 
@@ -39,11 +39,10 @@ class Game extends React.Component {
 
   draw() {
     const { drawCard } = this.props;
-    // this.timerId = setInterval(() => {
-    //   this.setState({ winner: "", status: "" });
-    //   drawCard();
-
-    // }, 2000);
+    this.timerId = setInterval(() => {
+      this.setState({ winner: "", status: "" });
+      drawCard();
+    }, 2000);
 
     drawCard();
   }
@@ -89,14 +88,12 @@ class Game extends React.Component {
       } else {
         winner("P1");
       }
-    }, 1000);
+    }, 1500);
   }
 
   stopWar() {
     if (this.state.status === "WAR!!!") {
-      clearInterval(this.timerId);
       this.setState({ status: "" });
-      this.draw();
     }
   }
 
@@ -111,11 +108,13 @@ class Game extends React.Component {
       movePileToDeck,
     } = this.props;
 
+    clearInterval(this.timerId);
+
     const result = GameLogic.whoWins(cardUpP1, cardUpP2);
     let cards;
 
     if (result === "war") {
-      this.setState({ status: "WAR!!!" });
+      this.setState({ status: "WAR!!!", winner: "" });
       this.warDraw();
       return;
     }
@@ -133,16 +132,20 @@ class Game extends React.Component {
     addCardToDiscard(cards, result);
     clearCard();
 
-    if (deckP1.length === 0) {
+    this.setState({ isGameOver: this.gameOver() });
+
+    if (deckP1.length === 0 && !this.state.isGameOver) {
       this.setState({ status: "Move P1 Pile to Deck" });
       movePileToDeck("p1");
     }
-    if (deckP2.length === 0) {
+    if (deckP2.length === 0 && !this.state.isGameOver) {
       this.setState({ status: "Move P2 Pile to Deck" });
       movePileToDeck("p2");
     }
 
-    this.setState({ isGameOver: this.gameOver() });
+    if (!this.state.isGameOver) {
+      this.draw();
+    }
   }
 
   gameOver() {
@@ -195,9 +198,11 @@ class Game extends React.Component {
       clearInterval(this.timerId); //won't be able to show the last round winner as it will render this
       return (
         <div className="game">
-          <p>Winner: {finalWinner}</p>
-          <p style={{ color: "red" }}>Game Over!</p>
-          <button onClick={this.restart().bind.this}>Restart</button>
+          <p id="last">Winner: {finalWinner}</p>
+          <p id="last" style={{ color: "red" }}>
+            Game Over!
+          </p>
+          <button onClick={this.restart.bind.this}>Restart</button>
         </div>
       );
     } else {

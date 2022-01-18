@@ -23,10 +23,10 @@ const deckTwo = ["11 spade", "12 heart", "10 spade"];
 // 2. WAR
 // const deckOne = ["14 heart", "13 club", "14 spade", "9 heart"];
 // const deckTwo = ["10 spade", "11 spade", "12 heart", "9 diamond"];
-// 3. MULTIWAR
+// 3. MULTIWAR //this is not working
 // const deckOne = ["14 heart", "13 club", "9 heart", "14 spade", "10 club"];
 // const deckTwo = ["10 spade", "11 spade", "9 diamond", "12 heart", "10 heart"];
-// 4. DURING WAR && DECK has 1 card left && PILE has more
+// 4. DURING WAR && DECK has 1 card left && PILE has more //last scence fast
 // const deckOne = [
 //   "14 heart",
 //   "13 club",
@@ -47,7 +47,7 @@ const deckTwo = ["11 spade", "12 heart", "10 spade"];
 //   "12 heart",
 //   "10 spade",
 // ];
-// 5. WAR ENDS && BOTH PLAYERS DECK EMPTY && PILE has more
+// 5. WAR ENDS && BOTH PLAYERS DECK EMPTY && PILE has more //this is not working
 // const deckOne = [
 //   "13 club",
 //   "9 heart",

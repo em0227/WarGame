@@ -34,6 +34,11 @@ code {
   width: 100%;
 }
 
+#last {
+  align-self: center;
+  font-size: 40px;
+}
+
 .players {
   display: flex;
   width: 100%;
@@ -42,6 +47,7 @@ code {
 .player {
   display: flex;
   align-items: center;
+  margin: 100px 100px 0 100px;
 }
 
 .description {
@@ -69,21 +75,20 @@ code {
 }
 
 .discard {
-  width: 100px;
-  height: 150px;
+  width: 150px;
+  height: 100px;
   margin: 0;
   border-radius: 0.3rem;
-}
-
-.discard p {
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .player-deck {
   background-color: darkGreen;
-  width: 100px;
-  height: 150px;
-  margin: 100px;
+  width: 150px;
+  height: 100px;
+  margin: 0 100px 100px 100px;
   border-radius: 0.3rem;
 }
 
@@ -98,6 +103,25 @@ button {
   font-size: 30px;
   padding: 10px 20px 10px 20px;
   margin: 10px 0 30px 0;
-  width: 100px;
+  width: 150px;
   align-self: center;
+}
+
+.face-up {
+  width: 100px;
+  height: 150px;
+  border-radius: 0.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.face-down {
+  width: 100px;
+  height: 150px;
+  border-radius: 0.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

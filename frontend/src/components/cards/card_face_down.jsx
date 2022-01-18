@@ -1,23 +1,16 @@
 import React from "react";
 
-const CardFaceDown = ({card: cardFaceDown}) => {
+const CardFaceDown = ({ card: cardFaceDown }) => {
+  const style =
+    cardFaceDown.length !== 0 ? { backgroundColor: "darkGreen" } : {};
+  const content =
+    cardFaceDown.length !== 0 ? `${cardFaceDown.length} cards` : "";
 
-  if (cardFaceDown.length === 0) {
-    return null;
-  } else {
-    return (
-      <div
-        style={{
-          backgroundColor: "darkGreen",
-          width: "150px",
-          height: "100px",
-          color: "white",
-        }}
-      >
-        {`${cardFaceDown.length} cards`}
-      </div>
-    );
-  }
+  return (
+    <div className="face-down" style={style}>
+      {content}
+    </div>
+  );
 };
 
 export default CardFaceDown;
