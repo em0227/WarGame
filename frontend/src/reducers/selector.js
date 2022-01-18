@@ -28,3 +28,7 @@ export const startGame = function () {
 function getRandomInt() {
   return Math.floor(Math.random() * 52);
 }
+
+const cards = startGame();
+export const deckOne = cards[0];
+export const deckTwo = cards[1];
