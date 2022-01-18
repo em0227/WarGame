@@ -120,8 +120,6 @@ export default (state = _default_state, action) => {
       const currentUpP2 = newState.p2.cardFaceUp;
       newState.p1.cardFaceDown.push(currentUpP1);
       newState.p2.cardFaceDown.push(currentUpP2);
-      console.log("p1 deck", newState.p1.deck);
-      console.log("p2 deck", newState.p1.deck);
       const newCardDownP1 = newState.p1.deck.pop();
       const newCardDownP2 = newState.p2.deck.pop();
       newState.p1.cardFaceDown.push(newCardDownP1);
