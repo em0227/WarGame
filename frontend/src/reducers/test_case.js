@@ -29,7 +29,7 @@ export const deckTwo = ["11 spade", "12 heart", "10 spade"];
 //   "12 heart",
 //   "10 spade",
 // ];
-// 5. DURING WAR && DECK has 1 card left && PILE has more
+// 5. DURING WAR && BOTH DECK has 1 card left && PILE has more
 // export const deckOne = [
 //   "13 club",
 //   "9 heart",
@@ -47,7 +47,7 @@ export const deckTwo = ["11 spade", "12 heart", "10 spade"];
 //   "10 spade",
 // ];
 
-//6. P2 DOESN'T HAVE ENOUGH CARD
+//6. P2 HAS LESS CARDS THAN P1
 // export const deckOne = [
 //   "11 spade",
 //   "13 club",
@@ -58,7 +58,7 @@ export const deckTwo = ["11 spade", "12 heart", "10 spade"];
 // ];
 // export const deckTwo = ["2 club", "9 diamond", "12 heart", "10 heart", "11 spade"];
 
-//7. WAR, Move pile to deck during Add cards to facedown (causing wether war ends or not end)
+//7. WAR WITH LESS CARDS
 
 // export const deckOne = ["9 spade", "13 heart", "14 heart"];
 // export const deckTwo = ["9 club", "11 diamond", "11 diamond"];
