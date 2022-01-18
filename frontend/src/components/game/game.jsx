@@ -199,6 +199,7 @@ class Game extends React.Component {
   }
 
   restart() {
+    this.setState({ winner: "", status: "" });
     this.props.restart();
   }
 
