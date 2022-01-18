@@ -9,7 +9,6 @@ class Game extends React.Component {
     this.state = {
       winner: "",
       status: "",
-      isGameOver: false,
     };
   }
 
@@ -75,7 +74,6 @@ class Game extends React.Component {
         addCardsToFaceDown();
       } else if (bothDeckEmpty) {
         movePileToDeck("p1");
-
         movePileToDeck("p2");
         this.setState({ status: "Move P1 & P2 Pile to Deck" });
         addCardsToFaceDown();
@@ -112,6 +110,8 @@ class Game extends React.Component {
       clearCard,
       deckP1,
       deckP2,
+      discardP1,
+      discardP2,
       movePileToDeck,
       finalWinner,
     } = this.props;
@@ -141,7 +141,6 @@ class Game extends React.Component {
     clearCard();
 
     this.gameOver();
-    // this.setState({ isGameOver: this.gameOver() });
 
     if (deckP1.length === 0 && deckP2.length === 0 && finalWinner === "") {
       this.setState({ status: "Move P1 & P2 Pile to Deck" });
@@ -154,7 +153,11 @@ class Game extends React.Component {
       this.setState({ status: "Move P1 Pile to Deck" });
       movePileToDeck("p1");
     }
-    if (!this.timerId && deckP1.length !== 0 && deckP2.length !== 0) {
+    if (
+      !this.timerId &&
+      (deckP1.length > 0 || discardP1.length > 0) &&
+      (deckP2.length > 0 || discardP2.length > 0)
+    ) {
       this.draw();
     }
   }
@@ -180,22 +183,14 @@ class Game extends React.Component {
       deckP2.length === 0 && cardUpP2 === "" && discardP2.length === 0;
 
     if (p2Wins && finalWinner === "") {
-      //final winner is p2
-      //can't set winner in global state while other stuff rendering, will just set up API call directly here
       winner("Player 2");
       updatePlayerData({ playerID: 2 });
       updateGame({ gameID });
-      // return true;
     } else if (p1Wins && finalWinner === "") {
-      //final winner is p1
       winner("Player 1");
       updatePlayerData({ playerID: 1 });
       updateGame({ gameID });
-      // return true;
-      // } else if (finalWinner !== "") {
-      // return true;
     }
-    // return false;
   }
 
   restart() {
