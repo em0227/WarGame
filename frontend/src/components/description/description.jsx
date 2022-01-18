@@ -22,7 +22,7 @@ const Description = () => {
         with the higher cards takes both piles (six cards). If the turned-up
         cards are again the same rank, each player places another card face down
         and turns another card face up. The player with the higher card takes
-        all 10 cards, and so on.
+        all 10 cards, and so on. Game ends until one player gets all 52 cards.
       </p>
     </div>
   );
