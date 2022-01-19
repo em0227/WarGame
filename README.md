@@ -2,7 +2,7 @@
 
 ## How to Play Instructions
 
-The game is LIVE on heroku! You can simply go to <a href="https://war-game-emily.herokuapp.com/" target="_blank">HERE</a>, then click the button ‘Play’ and two simulated players will start playing.
+The game is LIVE on heroku! You can simply go to [HERE](https://war-game-emily.herokuapp.com/"){:target="blank"}, then click the button ‘Play’ and two simulated players will start playing.
 
 If you wish to see what the development mode looks like, you can follow the steps:
 

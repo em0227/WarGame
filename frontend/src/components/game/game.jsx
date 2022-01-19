@@ -57,6 +57,8 @@ class Game extends React.Component {
       discardP1,
       discardP2,
       movePileToDeck,
+      gameID,
+      updateGame,
     } = this.props;
 
     const safeToProceed = deckP1.length >= 2 && deckP2.length >= 2;
@@ -76,9 +78,11 @@ class Game extends React.Component {
       if (p2Wins) {
         this.setState({ finalStatus: "P1 out of cards" });
         winner("P2");
+        updateGame({ gameID });
       } else if (p1Wins) {
         this.setState({ finalStatus: "P2 out of cards" });
         winner("P1");
+        updateGame({ gameID });
       } else if (safeToProceed) {
         addCardsToFaceDown();
       } else if (bothDeckEmpty) {
