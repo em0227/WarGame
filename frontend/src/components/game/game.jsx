@@ -76,13 +76,13 @@ class Game extends React.Component {
 
     this.timerId = setInterval(() => {
       if (p2Wins) {
-        this.setState({ finalStatus: "P1 out of cards" });
+        this.setState({ finalStatus: "P1 out of cards", warStatus: "" });
         winner("P2");
-        updateGame({ gameID });
+        // updateGame({ gameID });
       } else if (p1Wins) {
-        this.setState({ finalStatus: "P2 out of cards" });
+        this.setState({ finalStatus: "P2 out of cards", warStatus: "" });
         winner("P1");
-        updateGame({ gameID });
+        // updateGame({ gameID });
       } else if (safeToProceed) {
         addCardsToFaceDown();
       } else if (bothDeckEmpty) {
